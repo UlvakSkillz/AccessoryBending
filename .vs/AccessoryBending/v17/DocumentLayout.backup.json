@@ -1,0 +1,69 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\austi\\source\\repos\\AccessoryBending\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3FBFE355-5CBE-4115-880A-54F37BAA8CC7}|AccessoryBending\\AccessoryBending.csproj|c:\\users\\austi\\source\\repos\\accessorybending\\accessorybending\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FBFE355-5CBE-4115-880A-54F37BAA8CC7}|AccessoryBending\\AccessoryBending.csproj|solutionrelative:accessorybending\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3FBFE355-5CBE-4115-880A-54F37BAA8CC7}|AccessoryBending\\AccessoryBending.csproj|c:\\users\\austi\\source\\repos\\accessorybending\\accessorybending\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FBFE355-5CBE-4115-880A-54F37BAA8CC7}|AccessoryBending\\AccessoryBending.csproj|solutionrelative:accessorybending\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3FBFE355-5CBE-4115-880A-54F37BAA8CC7}|AccessoryBending\\AccessoryBending.csproj|c:\\users\\austi\\source\\repos\\accessorybending\\accessorybending\\accessorybending.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{3FBFE355-5CBE-4115-880A-54F37BAA8CC7}|AccessoryBending\\AccessoryBending.csproj|solutionrelative:accessorybending\\accessorybending.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AssemblyInfo.cs",
+              "DocumentMoniker": "C:\\Users\\austi\\source\\repos\\AccessoryBending\\AccessoryBending\\AssemblyInfo.cs",
+              "RelativeDocumentMoniker": "AccessoryBending\\AssemblyInfo.cs",
+              "ToolTip": "C:\\Users\\austi\\source\\repos\\AccessoryBending\\AccessoryBending\\AssemblyInfo.cs",
+              "RelativeToolTip": "AccessoryBending\\AssemblyInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAACwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T23:02:59.047Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccessoryBending.csproj",
+              "DocumentMoniker": "C:\\Users\\austi\\source\\repos\\AccessoryBending\\AccessoryBending\\AccessoryBending.csproj",
+              "RelativeDocumentMoniker": "AccessoryBending\\AccessoryBending.csproj",
+              "ToolTip": "C:\\Users\\austi\\source\\repos\\AccessoryBending\\AccessoryBending\\AccessoryBending.csproj",
+              "RelativeToolTip": "AccessoryBending\\AccessoryBending.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-08-11T23:02:21.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cs",
+              "DocumentMoniker": "C:\\Users\\austi\\source\\repos\\AccessoryBending\\AccessoryBending\\Main.cs",
+              "RelativeDocumentMoniker": "AccessoryBending\\Main.cs",
+              "ToolTip": "C:\\Users\\austi\\source\\repos\\AccessoryBending\\AccessoryBending\\Main.cs*",
+              "RelativeToolTip": "AccessoryBending\\Main.cs*",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAswF8AAACxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-11T23:02:06.809Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
