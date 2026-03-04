@@ -6,7 +6,7 @@ using Il2CppRUMBLE.Managers;
 using Il2CppRUMBLE.Players;
 using Il2CppRUMBLE.Utilities;
 using MelonLoader;
-using RumbleModdingAPI;
+using RumbleModdingAPI.RMAPI;
 using RumbleModUI;
 using System.Collections;
 using System.Globalization;
@@ -17,7 +17,7 @@ namespace AccessoryBending
     public static class BuildInfo
     {
         public const string ModName = "AccessoryBending";
-        public const string ModVersion = "1.0.0";
+        public const string ModVersion = "1.1.1";
         public const string Author = "UlvakSkillz";
     }
 
@@ -80,6 +80,7 @@ namespace AccessoryBending
         private GameObject parentObject;
         private static List<List<GameObject>> accessoriesToNuke = new List<List<GameObject>>();
         private static List<string> playersLoaded = new List<string>();
+        private static Shader URPUnlit;
 
         private static void Log(string msg)
         {
@@ -88,6 +89,7 @@ namespace AccessoryBending
 
         public override void OnLateInitializeMelon()
         {
+            URPUnlit = Shader.Find("Universal Render Pipeline/Unlit");
             CheckFiles();
             AccessoryBending.ModName = "AccessoryBending";
             AccessoryBending.ModVersion = BuildInfo.ModVersion;
@@ -101,7 +103,7 @@ namespace AccessoryBending
             AccessoryBending.GetFromFile();
             AccessoryBending.ModSaved += Save;
             UI.instance.UI_Initialized += UIInit;
-            Calls.onMapInitialized += MapInit;
+            Actions.onMapInitialized += MapInit;
             Save();
         }
 
@@ -148,10 +150,10 @@ namespace AccessoryBending
             UI.instance.AddMod(AccessoryBending);
         }
 
-        private void MapInit()
+        private void MapInit(string map)
         {
             PhotonNetwork.NetworkingClient.EventReceived += (Action<EventData>)OnEvent;
-            if (Calls.Scene.GetSceneName() == "Gym")
+            if (map == "Gym")
             {
                 CreateDressingRoomObjects();
             }
@@ -331,6 +333,7 @@ namespace AccessoryBending
                 }
                 AssetInfo assetInfo;
                 GameObject ddolAsset = SpawnDDOLAsset(file, name);
+                ChangeShaderLitToUnlit(ddolAsset);
                 if (ddolAsset != null)
                 {
                     if (childToMove != "")
@@ -351,6 +354,31 @@ namespace AccessoryBending
                         GameObject.Destroy(ddolAsset);
                     }
                     MelonLogger.Error($"ASSET ERROR: {file} DOESNT HAVE ASSET: {name}");
+                }
+            }
+        }
+
+        private static void ChangeShaderLitToUnlit(GameObject asset)
+        {
+            Renderer parentRendderer = asset.GetComponent<Renderer>();
+            if (parentRendderer != null)
+            {
+                for (int i = 0; i < parentRendderer.materials.Length; i++)
+                {
+                    if (parentRendderer.materials[i].shader.name == "Universal Render Pipeline/Lit")
+                    {
+                        parentRendderer.materials[i].shader = URPUnlit;
+                    }
+                }
+            }
+            foreach ( Renderer renderer in asset.GetComponentsInChildren<Renderer>())
+            {
+                for ( int i = 0; i < renderer.materials.Length;  i++ )
+                {
+                    if (renderer.materials[i].shader.name == "Universal Render Pipeline/Lit")
+                    {
+                        renderer.materials[i].shader = URPUnlit;
+                    }
                 }
             }
         }
@@ -377,7 +405,7 @@ namespace AccessoryBending
 
         public GameObject SpawnDDOLAsset(string assetBundlePath, string assetName)
         {
-            GameObject asset = Calls.LoadAssetFromFile<GameObject>(assetBundlePath, assetName);
+            GameObject asset = AssetBundles.LoadAssetFromFile<GameObject>(assetBundlePath, assetName);
             if (asset != null)
             {
                 asset = GameObject.Instantiate(asset);
@@ -509,7 +537,7 @@ namespace AccessoryBending
             GameObject assetToMove = (assetInfo.GetChildsPath() != "") ? newAsset.transform.FindChild(assetInfo.GetChildsPath()).gameObject : assetToMove = newAsset;
             try
             {
-                Transform bone = Calls.GameObjects.Gym.LOGIC.DressingRoom.PreviewPlayerController.GetGameObject().transform.FindChild(assetInfo.GetBoneToAttachTo());
+                Transform bone = GameObjects.Gym.INTERACTABLES.DressingRoom.PreviewPlayerController.GetGameObject().transform.FindChild(assetInfo.GetBoneToAttachTo());
                 assetToMove.transform.parent = bone;
                 newAsset.transform.position = bone.position;
                 newAsset.transform.rotation = bone.rotation;
