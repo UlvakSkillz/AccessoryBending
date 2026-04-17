@@ -17,9 +17,10 @@
           "Il2CppPhotonUnityNetworking": "0.0.0.0",
           "Il2CppRUMBLE.Plugins": "0.0.0.0",
           "Il2CppRUMBLE.Runtime": "0.0.0.0",
-          "MelonLoader": "0.7.2.2394",
+          "MelonLoader": "0.7.2.0",
           "ModUI": "2.3.0.0",
           "RumbleModdingAPI": "1.0.0.0",
+          "UIFramework": "1.0.0.0",
           "Unity.TextMeshPro": "0.0.0.0",
           "UnityEngine.CoreModule": "0.0.0.0",
           "UnityEngine": "0.0.0.0",
@@ -101,11 +102,11 @@
           }
         }
       },
-      "MelonLoader/0.7.2.2394": {
+      "MelonLoader/0.7.2.0": {
         "runtime": {
           "MelonLoader.dll": {
-            "assemblyVersion": "0.7.2.2394",
-            "fileVersion": "0.7.2.2394"
+            "assemblyVersion": "0.7.2.0",
+            "fileVersion": "0.7.2.0"
           }
         }
       },
@@ -120,6 +121,14 @@
       "RumbleModdingAPI/1.0.0.0": {
         "runtime": {
           "RumbleModdingAPI.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "UIFramework/1.0.0.0": {
+        "runtime": {
+          "UIFramework.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -184,6 +193,14 @@
       "Il2CppSystem/4.0.0.0": {
         "runtime": {
           "Il2CppSystem.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Il2CppSystem.Numerics/4.0.0.0": {
+        "runtime": {
+          "Il2CppSystem.Numerics.dll": {
             "assemblyVersion": "4.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -397,14 +414,6 @@
           }
         }
       },
-      "Il2CppPhotonVoice.PUN/0.0.0.0": {
-        "runtime": {
-          "Il2CppPhotonVoice.PUN.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
       "MonoMod.Utils/22.7.31.1": {
         "runtime": {
           "MonoMod.Utils.dll": {
@@ -437,11 +446,11 @@
           }
         }
       },
-      "Tomlet/6.1.0.0": {
+      "Tomlet/6.2.0.0": {
         "runtime": {
           "Tomlet.dll": {
-            "assemblyVersion": "6.1.0.0",
-            "fileVersion": "6.1.0.0"
+            "assemblyVersion": "6.2.0.0",
+            "fileVersion": "6.2.0.0"
           }
         }
       },
@@ -549,6 +558,22 @@
           }
         }
       },
+      "Unity.Collections/0.0.0.0": {
+        "runtime": {
+          "Unity.Collections.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
+        "runtime": {
+          "Unity.RenderPipelines.Core.Runtime.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "UnityEngine.UIModule/0.0.0.0": {
         "runtime": {
           "UnityEngine.UIModule.dll": {
@@ -613,25 +638,9 @@
           }
         }
       },
-      "Unity.XR.CompositionLayers/0.0.0.0": {
-        "runtime": {
-          "Unity.XR.CompositionLayers.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
       "UnityEngine.UnityAnalyticsCommonModule/0.0.0.0": {
         "runtime": {
           "UnityEngine.UnityAnalyticsCommonModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "UnityEngine.VideoModule/0.0.0.0": {
-        "runtime": {
-          "UnityEngine.VideoModule.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -672,14 +681,6 @@
       "Il2CppNativeGallery/0.0.0.0": {
         "runtime": {
           "Il2CppNativeGallery.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
-        "runtime": {
-          "Unity.RenderPipelines.Core.Runtime.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -781,9 +782,9 @@
           }
         }
       },
-      "Unity.XR.CoreUtils/0.0.0.0": {
+      "Unity.Burst/0.0.0.0": {
         "runtime": {
-          "Unity.XR.CoreUtils.dll": {
+          "Unity.Burst.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -792,14 +793,6 @@
       "Il2CppLIV.LCKCore.ThirdParty.MessagePack/0.0.0.0": {
         "runtime": {
           "Il2CppLIV.LCKCore.ThirdParty.MessagePack.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Unity.Collections/0.0.0.0": {
-        "runtime": {
-          "Unity.Collections.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -817,14 +810,6 @@
         "runtime": {
           "MonoMod.ILHelpers.dll": {
             "assemblyVersion": "1.1.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Unity.Burst/0.0.0.0": {
-        "runtime": {
-          "Unity.Burst.dll": {
-            "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
         }
@@ -882,7 +867,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "MelonLoader/0.7.2.2394": {
+    "MelonLoader/0.7.2.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -893,6 +878,11 @@
       "sha512": ""
     },
     "RumbleModdingAPI/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UIFramework/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -933,6 +923,11 @@
       "sha512": ""
     },
     "Il2CppSystem/4.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Il2CppSystem.Numerics/4.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -1067,11 +1062,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Il2CppPhotonVoice.PUN/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
     "MonoMod.Utils/22.7.31.1": {
       "type": "reference",
       "serviceable": false,
@@ -1092,7 +1082,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Tomlet/6.1.0.0": {
+    "Tomlet/6.2.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -1162,6 +1152,16 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Unity.Collections/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "UnityEngine.UIModule/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
@@ -1202,17 +1202,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Unity.XR.CompositionLayers/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
     "UnityEngine.UnityAnalyticsCommonModule/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "UnityEngine.VideoModule/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -1238,11 +1228,6 @@
       "sha512": ""
     },
     "Il2CppNativeGallery/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -1307,17 +1292,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Unity.XR.CoreUtils/0.0.0.0": {
+    "Unity.Burst/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
     "Il2CppLIV.LCKCore.ThirdParty.MessagePack/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Unity.Collections/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -1328,11 +1308,6 @@
       "sha512": ""
     },
     "MonoMod.ILHelpers/1.1.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Unity.Burst/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

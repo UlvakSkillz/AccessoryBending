@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AccessoryBending")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a68fa10676df3c9530eab9c59820853bf43c915b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ea482db98625233499d19e8f1dd39183c2aa500")]
 [assembly: System.Reflection.AssemblyProductAttribute("AccessoryBending")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AccessoryBending")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

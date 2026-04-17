@@ -7,9 +7,9 @@ using Il2CppRUMBLE.Players;
 using Il2CppRUMBLE.Utilities;
 using MelonLoader;
 using RumbleModdingAPI.RMAPI;
-using RumbleModUI;
 using System.Collections;
 using System.Globalization;
+using UIFramework;
 using UnityEngine;
 
 namespace AccessoryBending
@@ -17,7 +17,7 @@ namespace AccessoryBending
     public static class BuildInfo
     {
         public const string ModName = "AccessoryBending";
-        public const string ModVersion = "1.1.1";
+        public const string ModVersion = "1.2.2";
         public const string Author = "UlvakSkillz";
     }
 
@@ -71,10 +71,7 @@ namespace AccessoryBending
 
     public class Main : MelonMod
     {
-        private static List<AssetInfo> assetInfos = new List<AssetInfo>();
-        private static bool[] enabled;
-        public static Mod AccessoryBending = new Mod();
-        private bool showOthersAssets = true;
+        internal static List<AssetInfo> assetInfos = new List<AssetInfo>();
         private static byte myEventCode = 16;
         private static RaiseEventOptions eventOptions = new RaiseEventOptions() { Receivers = ReceiverGroup.Others, CachingOption = EventCaching.AddToRoomCache };
         private GameObject parentObject;
@@ -87,24 +84,17 @@ namespace AccessoryBending
             MelonLogger.Msg(msg);
         }
 
-        public override void OnLateInitializeMelon()
+        public override void OnInitializeMelon()
         {
             URPUnlit = Shader.Find("Universal Render Pipeline/Unlit");
             CheckFiles();
-            AccessoryBending.ModName = "AccessoryBending";
-            AccessoryBending.ModVersion = BuildInfo.ModVersion;
-            AccessoryBending.SetFolder("AccessoryBending");
-            AccessoryBending.AddToList("Show Others Accessories", true, 0, "Toggling ON will have others Accessories Shown that you have installed. (Will not Remove Accessories Already Loaded)", new Tags { });
-            AccessoryBending.AddToList("Nuke Others Accessories", false, 0, "Toggling ON then Saving will Remove all current Accessories from Players in the Scene. (Accessories will Come Back when a Player Enters the Room)", new Tags { DoNotSave = true });
-            foreach (AssetInfo info in assetInfos)
-            {
-                AccessoryBending.AddToList(info.GetAssetToUse().name, false, 0, "Toggling ON will have this Accessory Shown.", new Tags { });
-            }
-            AccessoryBending.GetFromFile();
-            AccessoryBending.ModSaved += Save;
-            UI.instance.UI_Initialized += UIInit;
+            Preferences.InitPrefs();
+            UI.Register((MelonBase)this, Preferences.AccessoryBendingCategory, Preferences.AccessoriesCategory).OnModSaved += Save;
+        }
+
+        public override void OnLateInitializeMelon()
+        {
             Actions.onMapInitialized += MapInit;
-            Save();
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
@@ -114,18 +104,12 @@ namespace AccessoryBending
 
         private void Save()
         {
-            showOthersAssets = (bool)AccessoryBending.Settings[0].SavedValue;
-            enabled = new bool[assetInfos.Count];
-            for(int i = 0; i < enabled.Length; i++)
+            if (Preferences.PrefNukeOthers.Value)
             {
-                enabled[i] = (bool)AccessoryBending.Settings[i+2].SavedValue;
-            }
-            if ((bool)AccessoryBending.Settings[1].SavedValue)
-            {
-                AccessoryBending.Settings[1].Value = false;
-                AccessoryBending.Settings[1].SavedValue = false;
+                Preferences.PrefNukeOthers.Value = false;
                 NukeOthersAccessories();
             }
+            Preferences.StoreLastSavedPrefs();
         }
 
         private void NukeOthersAccessories()
@@ -145,11 +129,6 @@ namespace AccessoryBending
             accessoriesToNuke.Clear();
         }
 
-        private void UIInit()
-        {
-            UI.instance.AddMod(AccessoryBending);
-        }
-
         private void MapInit(string map)
         {
             PhotonNetwork.NetworkingClient.EventReceived += (Action<EventData>)OnEvent;
@@ -161,7 +140,7 @@ namespace AccessoryBending
 
         public void OnEvent(EventData eventData)
         {
-            if (showOthersAssets && (eventData.Code == myEventCode))
+            if (Preferences.PrefShowOthers.Value && (eventData.Code == myEventCode))
             {
                 string recievedString = eventData.CustomData.ToString();
                 string[] processedString = recievedString.Split(';');
@@ -240,7 +219,7 @@ namespace AccessoryBending
         {
             for (int i = 0; i < assetInfos.Count; i++)
             {
-                if (enabled[i])
+                if (Preferences.PrefAccessoriesEnabled[i].Value)
                 {
                     PlaceDressingRoomAsset(assetInfos[i]);
                 }
@@ -267,7 +246,7 @@ namespace AccessoryBending
             {
                 try
                 {
-                    if (!file.ToLower().EndsWith(".txt"))
+                    if (!file.ToLower().EndsWith(".txt") && !file.ToLower().EndsWith(".cfg"))
                     {
                         assetFiles.Add(file);
                     }
@@ -297,10 +276,7 @@ namespace AccessoryBending
                 string showInHead = fileText[5];
                 string showInLegacy = fileText[6];
                 string childToMove = "";
-                if (fileText.Length >= 8)
-                {
-                    childToMove = fileText[7];
-                }
+                if (fileText.Length >= 8) { childToMove = fileText[7]; }
                 if ((pOffset.Length < 3) || (rOffset.Length < 3) || (scale.Length < 3))
                 {
                     MelonLogger.Error("ASSET BUNDLE ERROR: " + file + ".txt DOESNT HAVE ENOUGH DATA FOR POSITION ROTATION OR SCALE!");
@@ -336,14 +312,8 @@ namespace AccessoryBending
                 ChangeShaderLitToUnlit(ddolAsset);
                 if (ddolAsset != null)
                 {
-                    if (childToMove != "")
-                    {
-                        assetInfo = new AssetInfo(ddolAsset, bone, new Vector3(assetValues[0][0], assetValues[0][1], assetValues[0][2]), Quaternion.Euler(assetValues[1][0], assetValues[1][1], assetValues[1][2]), new Vector3(assetValues[2][0], assetValues[2][1], assetValues[2][2]), GetLayer(assetValuesBool[0], assetValuesBool[1]), childToMove);
-                    }
-                    else
-                    {
-                        assetInfo = new AssetInfo(ddolAsset, bone, new Vector3(assetValues[0][0], assetValues[0][1], assetValues[0][2]), Quaternion.Euler(assetValues[1][0], assetValues[1][1], assetValues[1][2]), new Vector3(assetValues[2][0], assetValues[2][1], assetValues[2][2]), GetLayer(assetValuesBool[0], assetValuesBool[1]));
-                    }
+                    if (childToMove != "") { assetInfo = new AssetInfo(ddolAsset, bone, new Vector3(assetValues[0][0], assetValues[0][1], assetValues[0][2]), Quaternion.Euler(assetValues[1][0], assetValues[1][1], assetValues[1][2]), new Vector3(assetValues[2][0], assetValues[2][1], assetValues[2][2]), GetLayer(assetValuesBool[0], assetValuesBool[1]), childToMove); }
+                    else { assetInfo = new AssetInfo(ddolAsset, bone, new Vector3(assetValues[0][0], assetValues[0][1], assetValues[0][2]), Quaternion.Euler(assetValues[1][0], assetValues[1][1], assetValues[1][2]), new Vector3(assetValues[2][0], assetValues[2][1], assetValues[2][2]), GetLayer(assetValuesBool[0], assetValuesBool[1])); }
                     assetInfos.Add(assetInfo);
                     Log($"Accessory Loaded: " + file + " | " + assetInfo.GetAssetToUse().name);
                 }
@@ -435,7 +405,7 @@ namespace AccessoryBending
                 {
                     for (int i = 0; i < assetInfos.Count; i++)
                     {
-                        if (enabled[i])
+                        if (Preferences.PrefAccessoriesEnabled[i].Value)
                         {
                             PlaceAsset(__instance, assetInfos[i]);
                         }
@@ -480,7 +450,7 @@ namespace AccessoryBending
             string assetString = PlayerManager.instance.localPlayer.Data.GeneralData.PlayFabMasterId + ";";
             for (int i = 0; i < assetInfos.Count; i++)
             {
-                if (enabled[i])
+                if (Preferences.PrefAccessoriesEnabled[i].Value)
                 {
                     assetString += assetInfos[i].GetAssetInfo();
                     if (i != assetInfos.Count - 1)
