@@ -17,7 +17,7 @@ namespace AccessoryBending
     public static class BuildInfo
     {
         public const string ModName = "AccessoryBending";
-        public const string ModVersion = "1.2.2";
+        public const string ModVersion = "1.2.3";
         public const string Author = "UlvakSkillz";
     }
 

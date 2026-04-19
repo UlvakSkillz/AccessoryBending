@@ -53,6 +53,7 @@ namespace AccessoryBending
 		{
 			List<MelonPreferences_Entry> prefs = new();
 			prefs.AddRange(AccessoryBendingCategory.Entries);
+			prefs.AddRange(AccessoriesCategory.Entries);
 			foreach (MelonPreferences_Entry entry in  prefs) { LastSavedValues[entry] = entry.BoxedValue; }
 		}
 
