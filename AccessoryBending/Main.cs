@@ -17,7 +17,7 @@ namespace AccessoryBending
     public static class BuildInfo
     {
         public const string ModName = "AccessoryBending";
-        public const string ModVersion = "1.2.3";
+        public const string ModVersion = "1.2.5";
         public const string Author = "UlvakSkillz";
     }
 
@@ -78,17 +78,20 @@ namespace AccessoryBending
         private static List<List<GameObject>> accessoriesToNuke = new List<List<GameObject>>();
         private static List<string> playersLoaded = new List<string>();
         private static Shader URPUnlit;
+        private static bool urpUnlitLookupDone = false;
+        private static bool eventReceivedRegistered = false;
 
-        private static void Log(string msg)
-        {
-            MelonLogger.Msg(msg);
-        }
+        private static void Log(string msg)  { if (Preferences.PrefDebugging.Value) { Melon<Main>.Logger.Msg(msg); } }
+        private static void Warn(string msg) { Melon<Main>.Logger.Warning(msg); }
+        private static void Err(string msg)  { Melon<Main>.Logger.Error(msg); }
+        private static void Err(Exception e) { Melon<Main>.Logger.Error(e); }
 
         public override void OnInitializeMelon()
         {
-            URPUnlit = Shader.Find("Universal Render Pipeline/Unlit");
+            Preferences.InitGlobalPrefs();
             CheckFiles();
-            Preferences.InitPrefs();
+            Preferences.InitAccessoryPrefs();
+            Preferences.StoreLastSavedPrefs();
             UI.Register((MelonBase)this, Preferences.AccessoryBendingCategory, Preferences.AccessoriesCategory).OnModSaved += Save;
         }
 
@@ -100,19 +103,15 @@ namespace AccessoryBending
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
             playersLoaded.Clear();
+            accessoriesToNuke.Clear();
         }
 
         private void Save()
         {
-            if (Preferences.PrefNukeOthers.Value)
-            {
-                Preferences.PrefNukeOthers.Value = false;
-                NukeOthersAccessories();
-            }
             Preferences.StoreLastSavedPrefs();
         }
 
-        private void NukeOthersAccessories()
+        internal static void NukeOthersAccessories()
         {
             for (int i = 0; i < playersLoaded.Count; i++)
             {
@@ -124,14 +123,18 @@ namespace AccessoryBending
                     }
                     accessoriesToNuke[i].RemoveAt(0);
                 }
-                accessoriesToNuke[i].Clear();
             }
             accessoriesToNuke.Clear();
+            playersLoaded.Clear();
         }
 
         private void MapInit(string map)
         {
-            PhotonNetwork.NetworkingClient.EventReceived += (Action<EventData>)OnEvent;
+            if (!eventReceivedRegistered)
+            {
+                PhotonNetwork.NetworkingClient.EventReceived += (Action<EventData>)OnEvent;
+                eventReceivedRegistered = true;
+            }
             if (map == "Gym")
             {
                 CreateDressingRoomObjects();
@@ -156,10 +159,12 @@ namespace AccessoryBending
         private IEnumerator ProcessItems(string[] processedString)
         {
             yield return new WaitForSeconds(1);
+            bool playerFound = false;
             for (int i = 1; i < PlayerManager.instance.AllPlayers.Count; i++)
             {
                 if (PlayerManager.instance.AllPlayers[i].Data.GeneralData.PlayFabMasterId == processedString[0])
                 {
+                    playerFound = true;
                     PlayerController controller = PlayerManager.instance.AllPlayers[i].Controller;
                     foreach (string assetStringToLoad in processedString)
                     {
@@ -181,9 +186,9 @@ namespace AccessoryBending
                             {
                                 assetFound = true;
                                 GameObject asset = assetInfos[j].GetAssetToUse();
-                                string bone = assetInfo[1];
                                 try
                                 {
+                                    string bone = assetInfo[1];
                                     string[] pOffsetString = assetInfo[2].Split(":");
                                     string[] rOffsetString = assetInfo[3].Split(":");
                                     string[] scaleString = assetInfo[4].Split(":");
@@ -195,23 +200,28 @@ namespace AccessoryBending
                                     AssetInfo newAsset = new AssetInfo(asset, bone, pOffset, rOffset, scale, 0, childsPath);
                                     PlaceAsset(controller, newAsset);
                                     string[] child = childsPath.Split("/");
-                                    Log("Accessory" + assetInfo[0] + "Placed on " + child[child.Length - 1]);
+                                    Log($"Accessory {assetInfo[0]} Placed on {child[child.Length - 1]}");
                                 }
                                 catch (Exception e)
                                 {
-                                    MelonLogger.Error("ERROR READING INCOMING STRING FOR PLAYER: " + processedString[0]);
-                                    MelonLogger.Error(e);
+                                    Err("ERROR READING INCOMING STRING FOR PLAYER: " + processedString[0]);
+                                    Err(e);
                                 }
                                 break;
                             }
                         }
                         if (!assetFound)
                         {
-                            Log("Accessory Not Found: " + assetInfo[0]);
+                            Warn("Accessory Not Found: " + assetInfo[0]);
                         }
                     }
                     break;
                 }
+            }
+            if (!playerFound)
+            {
+                Warn($"Received accessory data for player not in AllPlayers: {processedString[0]}");
+                playersLoaded.Remove(processedString[0]);
             }
         }
 
@@ -253,7 +263,7 @@ namespace AccessoryBending
                 }
                 catch (Exception e)
                 {
-                    MelonLogger.Error(e);
+                    Err(e);
                 }
             }
             foreach (string file in assetFiles)
@@ -265,7 +275,7 @@ namespace AccessoryBending
                 string[] fileText = File.ReadAllLines(file + ".txt");
                 if (fileText.Length < 7)
                 {
-                    MelonLogger.Error("ASSET BUNDLE ERROR: " + file + ".txt HAS TOO FEW LINES!");
+                    Err("ASSET BUNDLE ERROR: " + file + ".txt HAS TOO FEW LINES!");
                     continue;
                 }
                 string name = fileText[0];
@@ -279,7 +289,7 @@ namespace AccessoryBending
                 if (fileText.Length >= 8) { childToMove = fileText[7]; }
                 if ((pOffset.Length < 3) || (rOffset.Length < 3) || (scale.Length < 3))
                 {
-                    MelonLogger.Error("ASSET BUNDLE ERROR: " + file + ".txt DOESNT HAVE ENOUGH DATA FOR POSITION ROTATION OR SCALE!");
+                    Err("ASSET BUNDLE ERROR: " + file + ".txt DOESNT HAVE ENOUGH DATA FOR POSITION ROTATION OR SCALE!");
                     continue;
                 }
                 float[][] assetValues = new float[3][];
@@ -291,8 +301,8 @@ namespace AccessoryBending
                 }
                 catch (Exception e)
                 {
-                    MelonLogger.Error("ASSET BUNDLE ERROR: " + file + ".txt DATA CONVERSION ERROR: POSITION ROTATION OR SCALE string -> float!");
-                    MelonLogger.Error(e);
+                    Err("ASSET BUNDLE ERROR: " + file + ".txt DATA CONVERSION ERROR: POSITION ROTATION OR SCALE string -> float!");
+                    Err(e);
                     continue;
                 }
                 bool[] assetValuesBool = new bool[2];
@@ -303,15 +313,15 @@ namespace AccessoryBending
                 }
                 catch (Exception e)
                 {
-                    MelonLogger.Error("ASSET BUNDLE ERROR: " + file + ".txt DATA CONVERSION ERROR: SHOW IN HEADSET SHOW IN LEGACY CAM string -> bool!");
-                    MelonLogger.Error(e);
+                    Err("ASSET BUNDLE ERROR: " + file + ".txt DATA CONVERSION ERROR: SHOW IN HEADSET SHOW IN LEGACY CAM string -> bool!");
+                    Err(e);
                     continue;
                 }
                 AssetInfo assetInfo;
                 GameObject ddolAsset = SpawnDDOLAsset(file, name);
-                ChangeShaderLitToUnlit(ddolAsset);
                 if (ddolAsset != null)
                 {
+                    ChangeShaderLitToUnlit(ddolAsset);
                     if (childToMove != "") { assetInfo = new AssetInfo(ddolAsset, bone, new Vector3(assetValues[0][0], assetValues[0][1], assetValues[0][2]), Quaternion.Euler(assetValues[1][0], assetValues[1][1], assetValues[1][2]), new Vector3(assetValues[2][0], assetValues[2][1], assetValues[2][2]), GetLayer(assetValuesBool[0], assetValuesBool[1]), childToMove); }
                     else { assetInfo = new AssetInfo(ddolAsset, bone, new Vector3(assetValues[0][0], assetValues[0][1], assetValues[0][2]), Quaternion.Euler(assetValues[1][0], assetValues[1][1], assetValues[1][2]), new Vector3(assetValues[2][0], assetValues[2][1], assetValues[2][2]), GetLayer(assetValuesBool[0], assetValuesBool[1])); }
                     assetInfos.Add(assetInfo);
@@ -319,17 +329,23 @@ namespace AccessoryBending
                 }
                 else
                 {
-                    if (ddolAsset != null)
-                    {
-                        GameObject.Destroy(ddolAsset);
-                    }
-                    MelonLogger.Error($"ASSET ERROR: {file} DOESNT HAVE ASSET: {name}");
+                    Err($"ASSET ERROR: {file} DOESNT HAVE ASSET: {name}");
                 }
             }
         }
 
         private static void ChangeShaderLitToUnlit(GameObject asset)
         {
+            if (!urpUnlitLookupDone)
+            {
+                URPUnlit = Shader.Find("Universal Render Pipeline/Unlit");
+                urpUnlitLookupDone = true;
+                if (URPUnlit == null)
+                {
+                    Warn("Universal Render Pipeline/Unlit shader not found — accessory shader replacement will be skipped.");
+                }
+            }
+            if (URPUnlit == null) return;
             Renderer parentRendderer = asset.GetComponent<Renderer>();
             if (parentRendderer != null)
             {
@@ -435,6 +451,10 @@ namespace AccessoryBending
                                 Log("Removing Their Accessory: " + accessoriesToNuke[i][0].name);
                                 GameObject.Destroy(accessoriesToNuke[i][0]);
                             }
+                            else
+                            {
+                                Log($"accessoriesToNuke[{i}][0] is null on player leave — accessory was destroyed before bookkeeping cleanup");
+                            }
                             accessoriesToNuke[i].RemoveAt(0);
                         }
                         playersLoaded.RemoveAt(i);
@@ -475,13 +495,24 @@ namespace AccessoryBending
             }
             if ((playerSpot == -1) && (playerController.controllerType == ControllerType.Remote))
             {
-                MelonLogger.Error("REMOTE PLAYER NOT FOUND IN LIST!!!");
+                Err("REMOTE PLAYER NOT FOUND IN LIST!!!");
                 return;
             }
             GameObject newAsset = GameObject.Instantiate(assetInfo.GetAssetToUse());
             newAsset.name = newAsset.name.Replace("(Clone)", "");
             newAsset.SetLayerRecursively(assetInfo.GetLayer());
-            GameObject assetToMove = (assetInfo.GetChildsPath() != "") ? newAsset.transform.FindChild(assetInfo.GetChildsPath()).gameObject : assetToMove = newAsset;
+            GameObject assetToMove = newAsset;
+            if (assetInfo.GetChildsPath() != "")
+            {
+                Transform child = newAsset.transform.FindChild(assetInfo.GetChildsPath());
+                if (child == null)
+                {
+                    Err($"({newAsset.name}) CHILD PATH NOT FOUND ON ACCESSORY: {assetInfo.GetChildsPath()}");
+                    GameObject.Destroy(newAsset);
+                    return;
+                }
+                assetToMove = child.gameObject;
+            }
             if (playerController.controllerType == ControllerType.Remote)
             {
                 accessoriesToNuke[playerSpot].Add(newAsset);
@@ -491,6 +522,12 @@ namespace AccessoryBending
                 }
             }
             Transform bone = playerController.gameObject.transform.FindChild(assetInfo.GetBoneToAttachTo());
+            if (bone == null)
+            {
+                Err($"({newAsset.name}) BONE PATH NOT FOUND ON PLAYER: {assetInfo.GetBoneToAttachTo()}");
+                GameObject.Destroy(newAsset);
+                return;
+            }
             newAsset.transform.position = bone.position;
             newAsset.transform.rotation = bone.rotation;
             assetToMove.transform.parent = bone;
@@ -504,27 +541,40 @@ namespace AccessoryBending
         private static void PlaceDressingRoomAsset(AssetInfo assetInfo)
         {
             GameObject newAsset = GameObject.Instantiate(assetInfo.GetAssetToUse());
-            GameObject assetToMove = (assetInfo.GetChildsPath() != "") ? newAsset.transform.FindChild(assetInfo.GetChildsPath()).gameObject : assetToMove = newAsset;
-            try
+            GameObject assetToMove = newAsset;
+            if (assetInfo.GetChildsPath() != "")
             {
-                Transform bone = GameObjects.Gym.INTERACTABLES.DressingRoom.PreviewPlayerController.GetGameObject().transform.FindChild(assetInfo.GetBoneToAttachTo());
-                assetToMove.transform.parent = bone;
-                newAsset.transform.position = bone.position;
-                newAsset.transform.rotation = bone.rotation;
-                assetToMove.transform.localPosition = assetInfo.GetPositionOffset();
-                assetToMove.transform.localRotation = assetInfo.GetRotationOffset();
-                assetToMove.transform.localScale = assetInfo.GetLocalScale();
-                newAsset.SetActive(true);
-                assetToMove.SetActive(true);
-            }
-            catch
-            {
-                MelonLogger.Error($"({assetToMove.name}) DRESSING ROOM PATH NOT CORRECT! THIS IS MOST LIKELY DUE TO DIFFERENCES IN DRESSING ROOM PLAYER RIG AND NOT THE USER!");
-                if (newAsset != null)
+                Transform child = newAsset.transform.FindChild(assetInfo.GetChildsPath());
+                if (child == null)
                 {
+                    Err($"({newAsset.name}) CHILD PATH NOT FOUND ON ACCESSORY: {assetInfo.GetChildsPath()}");
                     GameObject.Destroy(newAsset);
+                    return;
                 }
+                assetToMove = child.gameObject;
             }
+            GameObject dressingRoomGO = GameObjects.Gym.INTERACTABLES.DressingRoom.PreviewPlayerController.GetGameObject();
+            if (dressingRoomGO == null)
+            {
+                Err($"({newAsset.name}) DRESSING ROOM PREVIEW PLAYER NOT FOUND — GameObjects.Gym.INTERACTABLES.DressingRoom.PreviewPlayerController is null");
+                GameObject.Destroy(newAsset);
+                return;
+            }
+            Transform bone = dressingRoomGO.transform.FindChild(assetInfo.GetBoneToAttachTo());
+            if (bone == null)
+            {
+                Err($"({newAsset.name}) DRESSING ROOM PATH NOT CORRECT! THIS IS MOST LIKELY DUE TO DIFFERENCES IN DRESSING ROOM PLAYER RIG AND NOT THE USER! bone='{assetInfo.GetBoneToAttachTo()}'");
+                GameObject.Destroy(newAsset);
+                return;
+            }
+            assetToMove.transform.parent = bone;
+            newAsset.transform.position = bone.position;
+            newAsset.transform.rotation = bone.rotation;
+            assetToMove.transform.localPosition = assetInfo.GetPositionOffset();
+            assetToMove.transform.localRotation = assetInfo.GetRotationOffset();
+            assetToMove.transform.localScale = assetInfo.GetLocalScale();
+            newAsset.SetActive(true);
+            assetToMove.SetActive(true);
         }
     }
 }

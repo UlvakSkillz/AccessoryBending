@@ -18,7 +18,6 @@
           "Il2CppRUMBLE.Plugins": "0.0.0.0",
           "Il2CppRUMBLE.Runtime": "0.0.0.0",
           "MelonLoader": "0.7.2.0",
-          "ModUI": "2.3.0.0",
           "RumbleModdingAPI": "1.0.0.0",
           "UIFramework": "1.0.0.0",
           "Unity.TextMeshPro": "0.0.0.0",
@@ -107,14 +106,6 @@
           "MelonLoader.dll": {
             "assemblyVersion": "0.7.2.0",
             "fileVersion": "0.7.2.0"
-          }
-        }
-      },
-      "ModUI/2.3.0.0": {
-        "runtime": {
-          "ModUI.dll": {
-            "assemblyVersion": "2.3.0.0",
-            "fileVersion": "2.3.0.0"
           }
         }
       },
@@ -297,6 +288,14 @@
       "Unity.XR.OpenXR/0.0.0.0": {
         "runtime": {
           "Unity.XR.OpenXR.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Il2CppDiscord.Sdk/0.0.0.0": {
+        "runtime": {
+          "Il2CppDiscord.Sdk.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -550,14 +549,6 @@
           }
         }
       },
-      "UnityEngine.InputLegacyModule/0.0.0.0": {
-        "runtime": {
-          "UnityEngine.InputLegacyModule.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
       "Unity.Collections/0.0.0.0": {
         "runtime": {
           "Unity.Collections.dll": {
@@ -566,9 +557,9 @@
           }
         }
       },
-      "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
+      "UnityEngine.InputLegacyModule/0.0.0.0": {
         "runtime": {
-          "Unity.RenderPipelines.Core.Runtime.dll": {
+          "UnityEngine.InputLegacyModule.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
@@ -686,6 +677,14 @@
           }
         }
       },
+      "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
+        "runtime": {
+          "Unity.RenderPipelines.Core.Runtime.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "Unity.VisualEffectGraph.Runtime/0.0.0.0": {
         "runtime": {
           "Unity.VisualEffectGraph.Runtime.dll": {
@@ -782,14 +781,6 @@
           }
         }
       },
-      "Unity.Burst/0.0.0.0": {
-        "runtime": {
-          "Unity.Burst.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
       "Il2CppLIV.LCKCore.ThirdParty.MessagePack/0.0.0.0": {
         "runtime": {
           "Il2CppLIV.LCKCore.ThirdParty.MessagePack.dll": {
@@ -806,11 +797,19 @@
           }
         }
       },
+      "Unity.Burst/0.0.0.0": {
+        "runtime": {
+          "Unity.Burst.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "MonoMod.ILHelpers/1.1.0.0": {
         "runtime": {
           "MonoMod.ILHelpers.dll": {
             "assemblyVersion": "1.1.0.0",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "1.1.0.0"
           }
         }
       }
@@ -868,11 +867,6 @@
       "sha512": ""
     },
     "MelonLoader/0.7.2.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "ModUI/2.3.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -988,6 +982,11 @@
       "sha512": ""
     },
     "Unity.XR.OpenXR/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Il2CppDiscord.Sdk/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -1147,17 +1146,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "UnityEngine.InputLegacyModule/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Unity.Collections/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
-    "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
+    "UnityEngine.InputLegacyModule/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -1232,6 +1226,11 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Unity.VisualEffectGraph.Runtime/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
@@ -1292,17 +1291,17 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Unity.Burst/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
     "Il2CppLIV.LCKCore.ThirdParty.MessagePack/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
     "UnityEngine.TerrainModule/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.Burst/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

@@ -10,11 +10,11 @@ namespace AccessoryBending
 
         internal static MelonPreferences_Category AccessoryBendingCategory;
 		internal static MelonPreferences_Entry<bool> PrefShowOthers;
-		internal static MelonPreferences_Entry<bool> PrefNukeOthers;
+		internal static MelonPreferences_Entry<bool> PrefDebugging;
         internal static MelonPreferences_Category AccessoriesCategory;
 		internal static List<MelonPreferences_Entry<bool>> PrefAccessoriesEnabled;
 
-        internal static void InitPrefs()
+        internal static void InitGlobalPrefs()
 		{
 			if (!Directory.Exists(USER_DATA)) { Directory.CreateDirectory(USER_DATA); }
 
@@ -22,19 +22,22 @@ namespace AccessoryBending
 			AccessoryBendingCategory.SetFilePath(Path.Combine(USER_DATA, CONFIG_FILE));
 
             PrefShowOthers = AccessoryBendingCategory.CreateEntry("ShowOthers", true, "Show Others Accessories", "Toggling ON will have others Accessories Shown that you have installed. (Will not Remove Accessories Already Loaded)");
-            PrefNukeOthers = AccessoryBendingCategory.CreateEntry("NukeOthers", false, "Nuke Others Accessories", "Toggling ON then Saving will Remove all current Accessories from Players in the Scene. (Accessories will Come Back when a Player Enters the Room)");
 
-            AccessoriesCategory = MelonPreferences.CreateCategory("Accessories", "Accessories");
-            AccessoriesCategory.SetFilePath(Path.Combine(USER_DATA, CONFIG_FILE));
-			
-			InitAccessoryPrefs();
+            UIFramework.UI.CreateButtonEntry(
+                category: AccessoryBendingCategory,
+                buttonText: "Nuke",
+                displayName: "Nuke Others Accessories",
+                description: "Click to Remove all current Accessories from Players in the Scene. (Accessories will Come Back when a Player Enters the Room)",
+                handler: () => Main.NukeOthersAccessories());
 
-            PrefNukeOthers.ResetToDefault();
-            StoreLastSavedPrefs();
+            PrefDebugging = AccessoryBendingCategory.CreateEntry("Debugging", false, "Debugging", "Toggling ON will print extensive diagnostic messages to the MelonLoader console.");
 		}
 
 		internal static void InitAccessoryPrefs()
         {
+            AccessoriesCategory = MelonPreferences.CreateCategory("Accessories", "Accessories");
+            AccessoriesCategory.SetFilePath(Path.Combine(USER_DATA, CONFIG_FILE));
+
             if (PrefAccessoriesEnabled != null)
             {
                 foreach (MelonPreferences_Entry<bool> entry in PrefAccessoriesEnabled)
@@ -68,7 +71,7 @@ namespace AccessoryBending
 
         public static bool IsPrefChanged(MelonPreferences_Entry entry)
 		{
-			if (LastSavedValues.TryGetValue(entry, out object? lastValue)) { return !entry.BoxedValue.Equals(lastValue); }
+			if (LastSavedValues.TryGetValue(entry, out object lastValue)) { return !entry.BoxedValue.Equals(lastValue); }
 			return false;
 		}
     }

@@ -4,156 +4,127 @@
         <name>UIFramework</name>
     </assembly>
     <members>
-        <member name="T:UIFramework.UIFController">
-            <summary>
-            Custom components that will serve as views in this MVP/MVC-ish pattern
-            </summary>
-            <remarks>I may have gone a little crazy with inheritance</remarks>
-            <summary>
-            Custom components that will serve as views in this MVP/MVC-ish pattern
-            </summary>
-            <remarks>I may have gone a little crazy with inheritance</remarks>
-        </member>
-        <member name="P:UIFramework.UIFController.Entry.DescriptionText">
+        <member name="P:UIFramework.Adapters.Entry.DescriptionText">
             <summary>
             Sets the description text
             </summary>
         </member>
-        <member name="P:UIFramework.UIFController.Entry.DisplayName">
+        <member name="P:UIFramework.Adapters.Entry.DisplayName">
             <summary>
             Sets the identifier text
             </summary>
         </member>
-        <member name="P:UIFramework.UIFController.Entry.EntryModel">
+        <member name="P:UIFramework.Adapters.Entry.EntryModel">
             <summary>
             Runs when the model property has been set. 
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.Entry.SaveAction">
+        <member name="M:UIFramework.Adapters.Entry.SaveAction">
             <summary>
             This is called when the Save button is pressed. Override to create custom behaviour.
             </summary>
             <remarks>Generally MelonPreferences are saved from the category, not the indivial entries.</remarks>
         </member>
-        <member name="T:UIFramework.UIFController.MelonEntry">
+        <member name="M:UIFramework.Adapters.Entry.ModelSet">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UIFramework.Adapters.Entry.ToTomlString(System.Object)">
+            <summary>
+            Serializes an object into the toml string representation of that object
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UIFramework.Adapters.Entry.FromTomlString(System.String,System.Type)">
+            <summary>
+            Parses a toml string into an object of type with its value.
+            </summary>
+            <param name="input"></param>
+            <param name="targetType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UIFramework.Adapters.DataEntry">
             <summary>
             Inherit this class to create your own custom entry controllers for your own input controls.
             TODO: Refactor this to suggest non-melon related settings storage
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.MelonEntry.ModelSet">
+        <member name="P:UIFramework.Adapters.DataEntry._prefModel">
             <inheritdoc/>
         </member>
-        <member name="M:UIFramework.UIFController.MelonEntry.ValidationCheck">
+        <member name="M:UIFramework.Adapters.DataEntry.ValidationCheck">
             <inheritdoc/>
         </member>
-        <member name="T:UIFramework.UIFController.TextInputEntry">
+        <member name="T:UIFramework.Adapters.TextInputEntry">
             <summary>
             Base controller for text fields 
             </summary>
         </member>
-        <member name="P:UIFramework.UIFController.TextInputEntry._prefModel">
-            <summary>
-            TODO: This is jank. Deal with this by creating a base class for preference entries that aren't based on melonloader.
-            </summary>
-        </member>
-        <member name="P:UIFramework.UIFController.TextInputEntry.textField">
+        <member name="P:UIFramework.Adapters.TextInputEntry.textField">
             <summary>
             Returns the textfield
             </summary>
         </member>
-        <member name="P:UIFramework.UIFController.TextInputEntry.PlaceHolderText">
+        <member name="P:UIFramework.Adapters.TextInputEntry.PlaceHolderText">
             <summary>
             Sets the placeholder text in the textField
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.TextInputEntry.ModelSet">
+        <member name="M:UIFramework.Adapters.TextInputEntry.SetData">
             <inheritdoc/>
         </member>
-        <member name="T:UIFramework.UIFController.PrefText">
+        <member name="T:UIFramework.Adapters.PrefBool">
             <summary>
             
             </summary>
         </member>
-        <member name="P:UIFramework.UIFController.PrefText.EnteredValue">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:UIFramework.UIFController.PrefText.ApplyValueToPref">
+        <member name="M:UIFramework.Adapters.PrefBool.SetData">
             <inheritdoc/>
         </member>
-        <member name="T:UIFramework.UIFController.PrefInt">
+        <member name="M:UIFramework.Adapters.PrefBool.EditCheck">
+            <inheritdoc/>
+        </member>
+        <member name="M:UIFramework.Adapters.PrefBool.ApplyValueToPref">
+            <inheritdoc/>
+        </member>
+        <member name="T:UIFramework.Adapters.PrefDropDown">
             <summary>
             
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.PrefInt.ApplyValueToPref">
+        <member name="M:UIFramework.Adapters.PrefDropDown.SetData">
             <inheritdoc/>
         </member>
-        <member name="T:UIFramework.UIFController.PrefFloat">
+        <member name="M:UIFramework.Adapters.PrefDropDown.EditCheck">
+            <inheritdoc/>
+        </member>
+        <member name="M:UIFramework.Adapters.PrefDropDown.ApplyValueToPref">
+            <inheritdoc/>
+        </member>
+        <member name="M:UIFramework.Adapters.ButtonEntryAdapter.SetData">
+            <inheritdoc/>
+        </member>
+        <member name="T:UIFramework.Adapters.EntryState">
             <summary>
             
             </summary>
         </member>
-        <member name="T:UIFramework.UIFController.PrefDouble">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:UIFramework.UIFController.PrefDouble.ApplyValueToPref">
-            <inheritdoc/>
-        </member>
-        <member name="T:UIFramework.UIFController.PrefBool">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:UIFramework.UIFController.PrefBool.ModelSet">
-            <inheritdoc/>
-        </member>
-        <member name="M:UIFramework.UIFController.PrefBool.EditCheck">
-            <inheritdoc/>
-        </member>
-        <member name="M:UIFramework.UIFController.PrefBool.ApplyValueToPref">
-            <inheritdoc/>
-        </member>
-        <member name="T:UIFramework.UIFController.PrefDropDown">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:UIFramework.UIFController.PrefDropDown.ModelSet">
-            <inheritdoc/>
-        </member>
-        <member name="M:UIFramework.UIFController.PrefDropDown.EditCheck">
-            <inheritdoc/>
-        </member>
-        <member name="M:UIFramework.UIFController.PrefDropDown.ApplyValueToPref">
-            <inheritdoc/>
-        </member>
-        <member name="M:UIFramework.UIFController.ButtonEntry.ModelSet">
-            <inheritdoc/>
-        </member>
-        <member name="T:UIFramework.UIFController.EntryState">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:UIFramework.UIFController.ListArea">
+        <member name="T:UIFramework.Adapters.ListAreaAdapterBase">
             <summary>
             Areas where UI elements are shown to the user. 
-            1. Mod list Sidebar 
-            2. Category tab top bar
+            1. ModButtonView list ModListAdapter 
+            2. CategoryTabView tab top bar
             3. Entries Content area
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.ListArea.Infanticide">
+        <member name="M:UIFramework.Adapters.ListAreaAdapterBase.Infanticide">
             <summary>
             
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.ListArea.SetModel(UIFramework.UIFModel.IHoldSubmodels)">
+        <member name="M:UIFramework.Adapters.ListAreaAdapterBase.SetModel(UIFramework.UIFModel.IHoldSubmodels)">
             <summary>
             Sets the underlying data model for the current instance.
             </summary>
@@ -163,86 +134,85 @@
             </remarks>
             <param name="model">The model to associate with this instance. Cannot be null.</param>
         </member>
-        <member name="M:UIFramework.UIFController.ListArea.BuildFromModelList">
+        <member name="M:UIFramework.Adapters.ListAreaAdapterBase.BuildFromModelList">
             <summary>
             Clears the contents and recreates them from the submodels list in Model
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.ListArea.SelectTab(UIFramework.UIFModel.IHoldSubmodels)">
+        <member name="M:UIFramework.Adapters.ListAreaAdapterBase.SelectTab(UIFramework.UIFModel.IHoldSubmodels)">
             <summary>
             
             </summary>
             <param name="buttonModel"></param>
         </member>
-        <member name="M:UIFramework.UIFController.ListArea.SaveAction">
+        <member name="M:UIFramework.Adapters.ListAreaAdapterBase.SaveAction">
             <summary>
             Is called when Save ButtonGo is clicked. Override to create custom behaviour 
             </summary>
         </member>
-        <member name="T:UIFramework.UIFController.Sidebar">
+        <member name="T:UIFramework.Adapters.ModListAdapter">
              <summary>
             
              </summary>
         </member>
-        <member name="T:UIFramework.UIFController.TopBar">
+        <member name="T:UIFramework.Adapters.CategoryListAdapter">
              <summary>
             
              </summary>
         </member>
-        <member name="T:UIFramework.UIFController.PrefList">
+        <member name="T:UIFramework.Adapters.PrefListAdapter">
             <summary>
             Main body of the UI. Lists individual preferences
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.PrefList.SaveAction">
+        <member name="M:UIFramework.Adapters.PrefListAdapter.SaveAction">
             <summary>
             When the save button is clicked, the selected category save action will be called. The model is now in charge of what that means
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.PrefList.DiscardAction">
+        <member name="M:UIFramework.Adapters.PrefListAdapter.DiscardAction">
             <inheritdoc/>
         </member>
-        <member name="M:UIFramework.UIFController.TabButtonController.OnSelect">
+        <member name="M:UIFramework.Adapters.TabButtonController.OnSelect">
             <summary>
             Runs when the button is clicked. Implement this in inheriting classes. 
             </summary>
             <exception cref="T:System.NotImplementedException"></exception>
             <remarks>IL2CPP does not like abstract methods 😭</remarks>
         </member>
-        <member name="T:UIFramework.UIFController.Mod">
+        <member name="T:UIFramework.Adapters.ModButtonView">
             <summary>
             
             </summary>
         </member>
-        <member name="T:UIFramework.UIFController.Category">
+        <member name="T:UIFramework.Adapters.CategoryTabView">
             <summary>
-            
             </summary>
         </member>
-        <member name="T:UIFramework.UIFController.IChildable">
+        <member name="T:UIFramework.Adapters.IChildable">
             <summary>
             Controllers for models that can be submodels of other models. 
             Preference Entries
-            Mod Buttons
-            Category Buttons
+            ModButtonView Buttons
+            CategoryTabView Buttons
             </summary>
         </member>
-        <member name="P:UIFramework.UIFController.IChildable.Model">
+        <member name="P:UIFramework.Adapters.IChildable.Model">
             <summary>
             Reference to the model the controller works from.  
             </summary>
         </member>
-        <member name="T:UIFramework.UIFController.WindowController">
+        <member name="T:UIFramework.Adapters.WindowCoordinator">
             <summary>
             
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.WindowController.BuildModList">
+        <member name="M:UIFramework.Adapters.WindowCoordinator.BuildModList">
             <summary>
             Resets the containers and build the modlist
             </summary>
         </member>
-        <member name="M:UIFramework.UIFController.WindowController.SaveButtonClick">
+        <member name="M:UIFramework.Adapters.WindowCoordinator.SaveButtonClick">
             <summary>
             Gets called when the save button gets clicked. 
             </summary>
@@ -343,6 +313,18 @@
             
             </summary>
         </member>
+        <member name="T:UIFramework.UIFModel.ModelDataEntryBase">
+            <summary>
+            A model for interfacing with a piece of data.
+            </summary>
+        </member>
+        <member name="M:UIFramework.UIFModel.ModelDataEntryBase.GetNewUIInstance">
+            <summary>
+            Returns an instance of the game object associated with the MelonPreferences_Entry type.
+            If a custom one is provided, it will return an instance of that instead
+            </summary>
+            <returns>TODO: Move this to the UI builders as this is ui logic</returns>
+        </member>
         <member name="T:UIFramework.UIFModel.EmptyCategory">
             <summary>
             
@@ -381,7 +363,7 @@
         </member>
         <member name="P:UIFramework.UIFModel.IModelable.Identifier">
             <summary>
-            Name for the model
+            DisplayName for the model
             </summary>
         </member>
         <member name="P:UIFramework.UIFModel.IModelable.DisplayName">
@@ -430,12 +412,12 @@
         </member>
         <member name="P:UIFramework.UIFModel.IEntry.Identifier">
             <summary>
-            Name/ID of the entry
+            DisplayName/ID of the entry
             </summary>
         </member>
         <member name="P:UIFramework.UIFModel.IEntry.Description">
             <summary>
-            Description of the entry
+            DisplayName of the entry
             </summary>
         </member>
         <member name="M:UIFramework.UIFModel.IEntry.SaveAction">
@@ -465,7 +447,7 @@
         <member name="P:UIFramework.UIFModel.ModelMelonCategory.DisplayName">
             <inheritdoc/>
         </member>
-        <member name="M:UIFramework.UIFModel.ModelMelonCategory.#ctor(MelonLoader.MelonPreferences_Category)">
+        <member name="M:UIFramework.UIFModel.ModelMelonCategory.#ctor(MelonLoader.MelonPreferences_Category,UIFramework.UIFModel.ModelModItem)">
             <summary>
             Creates a new instance of this class based on a MelonPreferences_Category
             </summary>
@@ -492,12 +474,12 @@
         <member name="P:UIFramework.UIFModel.ModelMelonEntry.Description">
             <inheritdoc/>
         </member>
-        <member name="P:UIFramework.UIFModel.ModelMelonEntry.BoxedValue">
+        <member name="P:UIFramework.UIFModel.ModelMelonEntry.ModelBoxedValue">
             <summary>
             Direct access to the PrefEntry boxedvalue property
             </summary>
         </member>
-        <member name="M:UIFramework.UIFModel.ModelMelonEntry.#ctor(MelonLoader.MelonPreferences_Entry)">
+        <member name="M:UIFramework.UIFModel.ModelMelonEntry.#ctor(MelonLoader.MelonPreferences_Entry,UIFramework.UIFModel.ModelCategoryItem)">
             <summary>
             Creates a new instance of this object based around a MelonPreferences_Entry object
             </summary>
@@ -513,23 +495,87 @@
         <member name="M:UIFramework.UIFModel.ModelMelonEntry.DiscardAction">
             <inheritdoc/>
         </member>
-        <member name="M:UIFramework.UIFModel.ModelMelonEntry.SetUIPrefabSource(UnityEngine.GameObject)">
+        <member name="T:UIFramework.ValidatorExtensions.DefaultValidator">
             <summary>
-            Use this function to provide your own prefab for this entry. 
-            The prefab must have a component that implements IUIFrameworkEntry and properly handles the value changes and saving. 
-            If no prefab is provided, a default one will be used based on the type of the preference 
-            (bools will be toggles, strings will be text input fields and so would numerics).
-            
+            Default implementation of the MelonLoader ValueValidator class.
+            This satisfies the required members but just acts as a passthrough. 
+            It's the equivalent of not having a validator at all, but it allows for the use of the other descriptor interfaces without needing to implement a custom validator.
             </summary>
-            <param name="prefab"></param>
         </member>
-        <member name="M:UIFramework.UIFModel.ModelMelonEntry.GetNewUIInstance">
+        <member name="T:UIFramework.ValidatorExtensions.ITextInputBehaviorDescriptor">
             <summary>
-            Returns an instance of the game object associated with the MelonPreferences_Entry type.
-            If a custom one is provided, it will return an instance of that instead
+            Describes properties for text inputs that define its behavior.
             </summary>
-            <returns>TODO: Move this to the UI builders as this is ui logic</returns>
         </member>
+        <member name="P:UIFramework.ValidatorExtensions.ITextInputBehaviorDescriptor.ContentType">
+            <summary>
+            What type of content is going into the textinput
+            </summary>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.TextInputBehaviorDescriptor">
+            <inheritdoc cref="T:UIFramework.ValidatorExtensions.ITextInputBehaviorDescriptor"/>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.ITextInputAppearanceDescriptor">
+            <summary>
+            Describes properties of text inputs that define how it looks
+            </summary>
+        </member>
+        <member name="P:UIFramework.ValidatorExtensions.ITextInputAppearanceDescriptor.IsAutoSizing">
+            <summary>
+            Set to true to have the text auto size between AutoSizeMin and AutoSizeMax. If false, FontSize will be used as the font size.
+            </summary>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.TextInputAppearanceDescriptor">
+            <inheritdoc cref="T:UIFramework.ValidatorExtensions.ITextInputAppearanceDescriptor"/>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.IDynamicDropdownDescriptor">
+            <summary>
+            Presents the entry as a dropdown and describes the options within it.
+            </summary>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.DynamicDropdownDescriptor">
+            <see cref="T:UIFramework.ValidatorExtensions.IDynamicDropdownDescriptor"/>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.ISliderDescriptor">
+            <summary>
+            Implementing this will present the entry as a slider in the UI
+            </summary>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.SliderDescriptor">
+            <summary>
+            Default implementation of ISliderDescriptor. Used for numeric inputs that want to be sliders. DecimalPlaces defaults to 5, Min defaults to 0, Max defaults to 1.
+            </summary>
+            <see cref="T:UIFramework.ValidatorExtensions.ISliderDescriptor"/>
+        </member>
+        <member name="P:UIFramework.ValidatorExtensions.SliderDescriptor.Min">
+            <summary>
+            Minimum value. Defaults 0
+            </summary>
+        </member>
+        <member name="P:UIFramework.ValidatorExtensions.SliderDescriptor.Max">
+            <summary>
+            Max value. Defaults 1.
+            </summary>
+        </member>
+        <member name="P:UIFramework.ValidatorExtensions.SliderDescriptor.DecimalPlaces">
+            <summary>
+            Decimal Places. Defaults 5
+            </summary>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.INumericUpDownDescriptor">
+            <summary>
+            Describes numeric up down controls
+            </summary>
+        </member>
+        <member name="P:UIFramework.ValidatorExtensions.INumericUpDownDescriptor.Increments">
+            <summary>
+            0 = default (1 for ints, 0.1 for floats). 
+            </summary>
+        </member>
+        <member name="T:UIFramework.ValidatorExtensions.NumericUpDownDescriptor">
+            <inheritdoc cref="T:UIFramework.ValidatorExtensions.INumericUpDownDescriptor"/>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:UIFramework.ValidatorExtensions.NumericUpDownDescriptor.Increments" -->
         <member name="T:UIFramework.BuildInfo">
             <summary></summary>
         </member>
@@ -545,6 +591,41 @@
         <member name="T:UIFramework.Core">
             <summary>
             
+            </summary>
+        </member>
+        <member name="M:UIFramework.Core.UiToggleInputCheck">
+            <summary>
+            Run OnUpdate. Check if the inputs for toggling the UI have been pressed.
+            </summary>
+        </member>
+        <member name="M:UIFramework.Core.InputToggled(System.Boolean)">
+            <summary>
+            The actual coroutine that toggles the UI. Has to be in a coroutine to allow for a delay if ModUI is present.
+            If ModUI is present, it matches UI Framework with ModUI. 
+            A delay is needed to make sure ModUI's new state has been apllied first before it's copied
+            </summary>
+            <param name="matchModUI"></param>
+            <returns></returns>
+            <remarks>This is for ModUI Compatibility. If ModUI is installed, it ensures that UI Framework and ModUI always stay in sync</remarks>
+        </member>
+        <member name="M:UIFramework.Core.SyncModUIState">
+            <summary>
+            Runs after mod UI keyboard toggle to make sure lastModUIState variable is correct
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UIFramework.Core.VRActivationAction">
+            <summary>
+            Checks if activation by VR input has been pressed
+            </summary>
+            <returns></returns>
+            <remarks>
+            Code yoinked from Baumritter's ModUI
+            </remarks>
+        </member>
+        <member name="M:UIFramework.Core.FirstGymLoad">
+            <summary>
+            Called on first gymload to build the UI and find the modUI window.
             </summary>
         </member>
         <member name="M:UIFramework.Debug.DiffLog(System.String,System.Boolean,System.Int32)">
@@ -582,7 +663,7 @@
             Please explicitly cast your mod instance as MelonBase to prevent future incompatibility
             So UI.Register((MelonBase)this, Category1, Category2,...);
             </remarks>
-            <returns>A reference to the created Mod Model for further customization</returns>
+            <returns>A reference to the created ModButtonView Model for further customization</returns>
         </member>
         <member name="M:UIFramework.UI.Register(MelonLoader.MelonBase,MelonLoader.MelonPreferences_Category[])">
             <summary>
